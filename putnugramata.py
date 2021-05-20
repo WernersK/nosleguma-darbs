@@ -1,36 +1,53 @@
 import json
-
+#c. tiek saglabati dati json formata
 with open("putnugramata.json", "r", encoding='utf-8') as fails:
     dati = fails.read()
-
+putni = json.loads(dati)
 def izvelne():
+    
     print("Izvelne")
-    print("1: parādīt putnu vērojumu datus")
-    print("2: pievienot jaunus datus")
-    print("3: meklēt putnu")
+    print("1: meklēt putnu")
+    print("2: parādīt putnu vērojumu datus")    
+    print("3: pievienot jaunus datus")
     print("4: saglabāt")
     izv = input("Izvēlies!")
     if izv == "1":
-        radit()
+        meklesana()
     elif izv == "2":
-        meklet()
+        visidati()
     elif izv == "3":
-        pievienot()
+        pievienosana()
     elif izv == "4":
         beigas()
     else:
         print("Mēģini vēlreiz!")
         izvelne()
-
-def radit():
+#b. ievaditie dati ierakstiti vardnica vai masiva
+def visidati():
     putni = [{"vārds": "Mājas Zvirbulis", "latīņu vārds": "Passer domesticus", "datums": "5/19/2021", "laiks": "12:00", "vieta":"Rīga", "piezīmes":"Mājas zvirbulis ir neliels vai vidēji liels, kompakts dziedātājputns ar lielu, apaļu galvu un spēcīgu knabi."}]
     for p in putni:
-        for atslega in p:
-            print(f'{atslega}: {p[atslega]}')
+        for putni in p:
+            print(f"{putni}: {p[putni]}")
         print()
     izvelne()
 
-def pievienot():
+#f. meklesanas iespeja, rezultatiem paradas uz ekrana
+def meklesana():
+    putni = input("Raksti meklējamo vārdu! ")
+    putni = putni.capitalize()
+    meklesana = False
+    for p in putni:        
+        if putni in p["vārds"]:
+            print("Atrasts!")
+            meklesana = True
+            for atslega in p:
+                print(f"{atslega}: {p[atslega]}")
+    if not meklesana:
+        print("Informācija nav atrasta\n")
+    izvelne()    
+
+#a. datu ievades iespeja lietotajam
+def pievienosana():
     putni = {}    
     vards = input("Raksti putna vārdu...")
     vards2 = input("Raksti putna latīnisko vārdu...")
@@ -46,29 +63,14 @@ def pievienot():
     putni["vieta"] = vieta
     putni["piezīmes"] = piezimes
 
-    putni = [] 
     putni.append(putni)
-    print("\nDati saglabāti!\n")
     izvelne()
-
-def meklet():
-    putni = input("Raksti meklējamo vārdu! ")
-    putni = putni.capitalize()
-    meklet = False
-    for p in putni:        
-        if putni in p["vārds"]:
-            print("Atrasts:")
-            meklet = True
-            for atslega in p:
-                print(f'{atslega}: {p[atslega]}')
-    if not meklet:
-        print("Informācija nav atrasta\n")
-    izvelne()     
 
 def beigas():
 
     with open("putnugramata.json", "w", encoding='utf-8') as fails:
         fails.write(dati)
-    print("Fails saglabāts. Programmas beigas.\n")
-
+    print("\nDarbs saglabāts!\n")
+#c. tiek saglabati dati json formata
 izvelne()
+#e. visi dati vai to dala tiek paraditi
